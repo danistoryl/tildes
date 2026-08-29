@@ -1,37 +1,40 @@
-# Makefile for interpreter - Modern GCC
-
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c11 -pedantic -g -O2
-LDFLAGS = 
+CFLAGS = -std=c11 -Wall -Wextra -pedantic -g -I src
+LDFLAGS = -lm
 
-SRCDIR = src
-BINDIR = bin
-TESTDIR = test
+SRC_DIR = src
+BIN_DIR = bin
+TEST_DIR = test
 
-SRCS = $(SRCDIR)/main.c $(SRCDIR)/lexer.c $(SRCDIR)/token.c $(SRCDIR)/value.c
+SRCS = $(wildcard $(SRC_DIR)/*.c)
 OBJS = $(SRCS:.c=.o)
-TARGET = $(BINDIR)/interpreter
+TARGET = $(BIN_DIR)/interpreter
 
-.PHONY: all clean test commit dirs
+.PHONY: all clean test commit run
 
-dirs:
-	mkdir -p $(BINDIR)
+all: $(TARGET)
 
-all: dirs $(TARGET)
+$(TARGET): $(OBJS) | $(BIN_DIR)
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LDFLAGS)
 
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+$(SRC_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-%.o: %.c
-	$(CC) $(CFLAGS) -I$(SRCDIR) -c -o $@ $<
+$(BIN_DIR):
+	mkdir -p $(BIN_DIR)
 
 clean:
 	rm -f $(OBJS) $(TARGET)
+	rm -rf $(BIN_DIR)
 
 test: $(TARGET)
-	./$(TARGET) $(TESTDIR)/test.lang
+	@echo "Running tests..."
+	./$(TARGET) $(TEST_DIR)/test.lang
 
-commit: clean
+run: $(TARGET)
+	./$(TARGET)
+
+commit: all
 	git add -A
-	git commit -m "Refactor: move source to src, binary to bin"
-	git push origin HEAD
+	git commit -m "Update: auto-commit" || true
+	git push || echo "No remote configured"

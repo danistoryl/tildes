@@ -1,80 +1,62 @@
-/*
- * token.c - Token creation and management
- * Minimal macros, clean separation of concerns
- */
-
-#define _POSIX_C_SOURCE 200809L
-
-#include "interpreter.h"
-#include <stdlib.h>
+#include "token.h"
 #include <string.h>
-#include <stdio.h>
 
-Token token_create(TokenType type, const char *value, size_t line, size_t column) {
-    Token token;
-    token.type = type;
-    token.line = line;
-    token.column = column;
-    
-    if (value != NULL) {
-        token.value = strdup(value);
-    } else {
-        token.value = NULL;
-    }
-    
-    return token;
+static const char* token_names[] = {
+    "IDENT", "NUMBER", "STRING",
+    "LET", "MUT", "PUB",
+    "BOOL", "NUM", "STR",
+    "I8", "I16", "I32", "I64",
+    "F8", "F16", "F32", "F64",
+    "DYN", "NIL", "VOID",
+    "LIST", "MAP", "SET",
+    "ENUM", "TYPE", "STRUCT",
+    "FUN", "RETURN",
+    "IF", "ELIF", "ELSE",
+    "WHEN", "IS", "NOT",
+    "FOR", "IN", "WHILE", "DO",
+    "BREAK", "CONTINUE", "DEFAULT",
+    "USE", "AS",
+    "ASYNC", "AWAIT",
+    "+", "-", "*", "/",
+    "==", "!=", "<", ">", "<=", ">=",
+    "=", "=>", ".", ":",
+    "..", ",", ";",
+    "(", ")", "{", "}", "[", "]",
+    "EOF", "ERROR"
+};
+
+Token token_new(TokenType type, const char* start, size_t len, int line, int col) {
+    Token t;
+    t.type = type;
+    t.start = start;
+    t.length = len;
+    t.line = line;
+    t.column = col;
+    return t;
 }
 
-void token_free(Token *token) {
-    if (token == NULL) {
-        return;
+const char* token_type_str(TokenType type) {
+    if (type < 0 || type > TOKEN_ERROR) {
+        return "UNKNOWN";
     }
-    
-    free(token->value);
-    token->value = NULL;
+    return token_names[type];
 }
 
-const char *token_type_name(TokenType type) {
-    switch (type) {
-        case TOKEN_EOF:
-            return "EOF";
-        case TOKEN_NUMBER:
-            return "NUMBER";
-        case TOKEN_STRING:
-            return "STRING";
-        case TOKEN_IDENTIFIER:
-            return "IDENTIFIER";
-        case TOKEN_PLUS:
-            return "PLUS";
-        case TOKEN_MINUS:
-            return "MINUS";
-        case TOKEN_STAR:
-            return "STAR";
-        case TOKEN_SLASH:
-            return "SLASH";
-        case TOKEN_ASSIGN:
-            return "ASSIGN";
-        case TOKEN_LPAREN:
-            return "LPAREN";
-        case TOKEN_RPAREN:
-            return "RPAREN";
-        case TOKEN_LBRACE:
-            return "LBRACE";
-        case TOKEN_RBRACE:
-            return "RBRACE";
-        case TOKEN_SEMICOLON:
-            return "SEMICOLON";
-        case TOKEN_PRINT:
-            return "PRINT";
-        case TOKEN_LET:
-            return "LET";
-        case TOKEN_IF:
-            return "IF";
-        case TOKEN_ELSE:
-            return "ELSE";
-        case TOKEN_WHILE:
-            return "WHILE";
-        default:
-            return "UNKNOWN";
+bool token_is_keyword(const char* str, size_t len) {
+    static const char* keywords[] = {
+        "let", "mut", "pub", "bool", "num", "str",
+        "i8", "i16", "i32", "i64", "f8", "f16", "f32", "f64",
+        "dyn", "nil", "void", "list", "map", "set",
+        "enum", "type", "struct", "fun", "return",
+        "if", "elif", "else", "when", "is", "not",
+        "for", "in", "while", "do", "break", "continue", "default",
+        "use", "as", "async", "await"
+    };
+    
+    for (size_t i = 0; i < sizeof(keywords)/sizeof(keywords[0]); i++) {
+        if (len == strlen(keywords[i]) && strncmp(str, keywords[i], len) == 0) {
+            return true;
+        }
     }
+    return false;
 }

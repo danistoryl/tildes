@@ -1,52 +1,50 @@
-/*
- * value.c - Runtime value management
- * Clean value creation and cleanup
- */
-
-#define _POSIX_C_SOURCE 200809L
-
-#include "interpreter.h"
-#include <stdlib.h>
+#include "value.h"
 #include <string.h>
 
-Value value_number(double num) {
-    Value val;
-    val.type = VALUE_NUMBER;
-    val.data.number = num;
-    return val;
-}
-
-Value value_string(const char *str) {
-    Value val;
-    val.type = VALUE_STRING;
-    if (str != NULL) {
-        val.data.string = strdup(str);
-    } else {
-        val.data.string = NULL;
-    }
-    return val;
+Value value_nil(void) {
+    Value v;
+    v.type = TYPE_NIL;
+    v.as_ptr = NULL;
+    return v;
 }
 
 Value value_bool(bool b) {
-    Value val;
-    val.type = VALUE_BOOL;
-    val.data.boolean = b;
-    return val;
+    Value v;
+    v.type = TYPE_BOOL;
+    v.as_bool = b;
+    return v;
 }
 
-Value value_null(void) {
-    Value val;
-    val.type = VALUE_NULL;
-    return val;
+Value value_i32(int32_t i) {
+    Value v;
+    v.type = TYPE_I32;
+    v.as_i32 = i;
+    return v;
 }
 
-void value_free(Value *val) {
-    if (val == NULL) {
-        return;
-    }
+Value value_f64(double d) {
+    Value v;
+    v.type = TYPE_F64;
+    v.as_f64 = d;
+    return v;
+}
+
+Value value_string(ObjString* s) {
+    Value v;
+    v.type = TYPE_STR;
+    v.as_string = s;
+    return v;
+}
+
+bool values_equal(Value a, Value b) {
+    if (a.type != b.type) return false;
     
-    if (val->type == VALUE_STRING) {
-        free(val->data.string);
-        val->data.string = NULL;
+    switch (a.type) {
+        case TYPE_NIL: return true;
+        case TYPE_BOOL: return a.as_bool == b.as_bool;
+        case TYPE_I32: return a.as_i32 == b.as_i32;
+        case TYPE_F64: return a.as_f64 == b.as_f64;
+        case TYPE_STR: return a.as_string == b.as_string;
+        default: return false;
     }
 }

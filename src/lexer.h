@@ -1,26 +1,27 @@
-/*
- * lexer.h - Lexer interface
- * Tokenizes source code into tokens
- */
+#ifndef INTERPRETER_LEXER_H
+#define INTERPRETER_LEXER_H
 
-#ifndef LEXER_H
-#define LEXER_H
+#include "token.h"
+#include <stddef.h>
 
-#include "interpreter.h"
-
-/* Lexer state */
+// --- Lexer State ---
 typedef struct {
-    const char *source;
-    size_t length;
-    size_t start;
-    size_t current;
-    size_t line;
-    size_t column;
+    const char* start;
+    const char* current;
+    int line;
+    int column;
+    Error error;
 } Lexer;
 
-/* Lexer functions */
-Lexer lexer_init(const char *source);
-Token lexer_next_token(Lexer *lexer);
-void lexer_free(Lexer *lexer);
+// Lexer functions
+Lexer lexer_new(const char* source);
+Token lexer_next(Lexer* lex);
+bool lexer_is_end(Lexer* lex);
+void lexer_skip_whitespace(Lexer* lex);
+char lexer_advance(Lexer* lex);
+char lexer_peek(Lexer* lex);
+char lexer_peek_next(Lexer* lex);
+bool lexer_match(Lexer* lex, char expected);
+Token lexer_error(Lexer* lex, const char* msg);
 
-#endif /* LEXER_H */
+#endif
