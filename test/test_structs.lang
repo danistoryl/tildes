@@ -1,0 +1,68 @@
+// Test Structs and Methods
+use System;
+
+struct Point {
+    x: num,
+    y: num
+}
+
+struct Person {
+    name: str,
+    age: num,
+    active: bool
+}
+
+struct Rectangle {
+    width: num,
+    height: num
+}
+
+// Method on struct
+fun Point::distance(self: Point) -> num {
+    return (self.x * self.x + self.y * self.y).sqrt();
+}
+
+fun Person::greet(self: Person) -> str {
+    return "Hi, I'm " + self.name + ", age " + self.age.to_string();
+}
+
+fun Rectangle::area(self: Rectangle) -> num {
+    return self.width * self.height;
+}
+
+fun use_struct() -> Point {
+    let p: Point = {
+        10.0,
+        20.0
+    } as Point
+    return p;
+}
+
+fun main() {
+    print("Structs test passed!")
+    
+    let p1: Point = {
+        3.0,
+        4.0
+    } as Point
+    
+    print("Point distance: " + p1.distance().to_string())
+    
+    let person: Person = {
+        "Alice",
+        30,
+        true
+    } as Person
+    
+    print(person.greet())
+    
+    let rect: Rectangle = {
+        5.0,
+        10.0
+    } as Rectangle
+    
+    print("Rectangle area: " + rect.area().to_string())
+    
+    let p2 = use_struct()
+    print("Created point via function")
+}

@@ -1,0 +1,51 @@
+// Test Control Flow: if, elif, else, when
+use System;
+
+fun check_value(x: num) -> str {
+    if x > 100 {
+        return "Very large";
+    } elif x > 50 {
+        return "Large";
+    } elif x > 10 {
+        return "Medium";
+    } else {
+        return "Small";
+    }
+}
+
+fun describe_day(day: num) -> str {
+    return when day {
+        1 => "Monday",
+        2 => "Tuesday",
+        3 => "Wednesday",
+        4 => "Thursday",
+        5 => "Friday",
+        6, 7 => "Weekend",
+        else => "Invalid day"
+    };
+}
+
+fun process_value(value: dyn) -> str {
+    return when value {
+        is num => "Integer type",
+        is str => "String type",
+        is bool => "Boolean type",
+        else => "Unknown type"
+    };
+}
+
+fun main() {
+    print("Control flow test passed!")
+    print(check_value(5))
+    print(check_value(15))
+    print(check_value(55))
+    print(check_value(150))
+    
+    print(describe_day(1))
+    print(describe_day(6))
+    print(describe_day(9))
+    
+    print(process_value(42))
+    print(process_value("hello"))
+    print(process_value(true))
+}

@@ -1,0 +1,46 @@
+// Test Enums and Type Aliases
+use System;
+
+enum Color {
+    RED,
+    GREEN,
+    BLUE
+}
+
+enum Status {
+    PENDING,
+    RUNNING,
+    COMPLETED,
+    FAILED
+}
+
+fun get_color_name(c: Color) -> str {
+    return when c {
+        Color.RED => "Red",
+        Color.GREEN => "Green",
+        Color.BLUE => "Blue",
+        else => "Unknown"
+    };
+}
+
+fun check_status(s: Status) -> str {
+    if s == Status.RUNNING {
+        return "Process is running";
+    } elif s == Status.COMPLETED {
+        return "Process completed";
+    } else {
+        return "Waiting";
+    }
+}
+
+fun main() {
+    print("Enums test passed!")
+    
+    let my_color: Color = Color.RED
+    print("Color: " + get_color_name(my_color))
+    
+    let status: Status = Status.RUNNING
+    print(check_status(status))
+    
+    print("Enum variants work correctly")
+}

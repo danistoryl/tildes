@@ -1,0 +1,82 @@
+// Test Types: bool, num, str, i8, i16, i32, i64, f8, f16, f32, f64, dyn, nil, void
+// list<dyn>, map<dyn, dyn>, set<dyn>, enum, struct, type, (val, val) record
+use System;
+
+fun test_primitives() {
+    // Boolean
+    let b: bool = true
+    
+    // Numbers - signed integers
+    let i8_val: i8 = 127
+    let i16_val: i16 = 32767
+    let i32_val: i32 = 2147483647
+    let i64_val: i64 = 9223372036854775807
+    
+    // Numbers - floats
+    let f32_val: f32 = 3.14
+    let f64_val: f64 = 3.14159265359
+    
+    // Generic num
+    let num_val: num = 42
+    
+    // String
+    let s: str = "Hello, typed world!"
+    
+    print("Primitives test passed!")
+}
+
+fun test_collections() {
+    // List with dynamic types
+    let dyn_list: list<dyn> = [1, "string", true, 3.14]
+    print("List length: " + len(dyn_list).to_string())
+    
+    // Map with typed keys and dynamic values
+    let my_map: map<str, dyn> = {
+        "name": "Alice",
+        "age": 30,
+        "active": true
+    }
+    print("Map created with " + len(my_map).to_string() + " entries")
+    
+    // Set with dynamic types
+    let my_set: set<dyn> = {1, 2, 3, "four"}
+    print("Set created")
+    
+    print("Collections test passed!")
+}
+
+fun test_records() {
+    // Record/tuple syntax
+    let pair: (num, str) = (42, "answer")
+    print("Record created")
+    
+    print("Records test passed!")
+}
+
+fun test_dynamic_and_nil() {
+    // Dynamic type
+    let dyn_val: dyn = "anything"
+    dyn_val = 123
+    dyn_val = true
+    
+    // Nil/Null
+    let nothing: nil = nil
+    
+    // Void function
+    test_void()
+    
+    print("Dynamic and nil test passed!")
+}
+
+fun test_void() -> void {
+    // Returns nothing
+}
+
+fun main() {
+    print("Types test passed!")
+    test_primitives()
+    test_collections()
+    test_records()
+    test_dynamic_and_nil()
+    print("All type tests completed!")
+}

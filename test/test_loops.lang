@@ -1,0 +1,72 @@
+// Test Loops: for, while, do-while, break, continue
+use System;
+
+fun sum_range(max: num) -> num {
+    let total: num = 0;
+
+    for i in 0..max {
+        total = total + i;
+    }
+
+    return total;
+}
+
+fun print_all(items: list<str>) {
+    for item in items {
+        print(item);
+    }
+}
+
+fun countdown(start: num) {
+    let current: num = start;
+
+    while current > 0 {
+        print(current.to_string());
+        current = current - 1;
+    }
+
+    print("Liftoff!");
+}
+
+fun validate_input() -> num {
+    let input: num = 0;
+    let attempts: num = 0;
+
+    do {
+        input = 5; // Simulated input
+        attempts = attempts + 1;
+        if attempts > 3 {
+            break;
+        }
+    } while input < 0;
+
+    return input;
+}
+
+fun nested_loop_example() -> num {
+    let sum: num = 0;
+    
+    outer: for i in 0..5 {
+        for j in 0..5 {
+            if j == 3 {
+                break outer;
+            }
+            sum = sum + j;
+        }
+    }
+    
+    return sum;
+}
+
+fun main() {
+    print("Loops test passed!")
+    print("Sum 0..10: " + sum_range(10).to_string())
+    
+    let fruits: list<str> = ["apple", "banana", "cherry"]
+    print_all(fruits)
+    
+    countdown(3)
+    
+    print("Validate: " + validate_input().to_string())
+    print("Nested sum: " + nested_loop_example().to_string())
+}

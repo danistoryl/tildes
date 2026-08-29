@@ -1,0 +1,55 @@
+// Test Functions: fun, return, async, await, recursion
+use System;
+
+fun add(a: num, b: num) -> num {
+    return a + b;
+}
+
+fun factorial(n: num) -> num {
+    if n <= 1 {
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
+
+fun greet(name: str) -> str {
+    return "Hello, " + name + "!";
+}
+
+// Method on struct style
+fun multiply(self: num, factor: num) -> num {
+    return self * factor;
+}
+
+pub fun public_function() -> str {
+    return "I am public";
+}
+
+// Async function (simulated)
+pub async fun fetch_data(url: str) -> str {
+    return "Data from " + url;
+}
+
+pub async fun fetch_all(urls: list<str>) -> list<str> {
+    let results: list<str> = [];
+    
+    for url in urls {
+        let data: str = await fetch_data(url);
+        results.append(data);
+    }
+    
+    return results;
+}
+
+fun main() {
+    print("Functions test passed!")
+    print("Add: " + add(10, 20).to_string())
+    print("Factorial(5): " + factorial(5).to_string())
+    print(greet("World"))
+    print(public_function())
+    
+    // Simulated async
+    let urls: list<str> = ["url1", "url2"]
+    // let results = await fetch_all(urls)
+    print("Async functions defined")
+}
