@@ -1,0 +1,37 @@
+// System String Library
+// Provides string operations
+
+pub fun length(s: str) -> num {
+    return len(s);
+}
+
+pub fun to_upper(s: str) -> str {
+    // TODO: Implement uppercase conversion
+    return s;
+}
+
+pub fun to_lower(s: str) -> str {
+    // TODO: Implement lowercase conversion
+    return s;
+}
+
+pub fun substring(s: str, start: num, end: num) -> str {
+    // TODO: Implement substring
+    return s;
+}
+
+pub fun trim(s: str) -> str {
+    // TODO: Implement trim
+    return s;
+}
+
+pub fun split(s: str, delimiter: str) -> list<str> {
+    // TODO: Implement split
+    let result: list<str> = [];
+    return result;
+}
+
+pub fun join(items: list<str>, delimiter: str) -> str {
+    // TODO: Implement join
+    return "";
+}
