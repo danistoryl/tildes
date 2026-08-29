@@ -4,27 +4,34 @@ CC = gcc
 CFLAGS = -Wall -Wextra -std=c11 -pedantic -g -O2
 LDFLAGS = 
 
-SRCS = main.c lexer.c token.c value.c
+SRCDIR = src
+BINDIR = bin
+TESTDIR = test
+
+SRCS = $(SRCDIR)/main.c $(SRCDIR)/lexer.c $(SRCDIR)/token.c $(SRCDIR)/value.c
 OBJS = $(SRCS:.c=.o)
-TARGET = interpreter
+TARGET = $(BINDIR)/interpreter
 
-.PHONY: all clean test commit
+.PHONY: all clean test commit dirs
 
-all: $(TARGET)
+dirs:
+	mkdir -p $(BINDIR)
+
+all: dirs $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -I$(SRCDIR) -c -o $@ $<
 
 clean:
 	rm -f $(OBJS) $(TARGET)
 
 test: $(TARGET)
-	./$(TARGET) test.lang
+	./$(TARGET) $(TESTDIR)/test.lang
 
 commit: clean
 	git add -A
-	git commit -m "Update interpreter code"
+	git commit -m "Refactor: move source to src, binary to bin"
 	git push origin HEAD
