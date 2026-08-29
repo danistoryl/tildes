@@ -1,0 +1,15 @@
+```
+# Compiled and build artifacts
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.a
+*.out
+interpreter
+```node_modules/
+.next/
+dist/
+build/
+*.log
