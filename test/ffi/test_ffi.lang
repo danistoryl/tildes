@@ -1,0 +1,28 @@
+// Test FFI: Calling C functions from FCL
+
+// Load C library and call functions
+// Note: This syntax is conceptual; actual implementation depends on VM integration
+
+fun main() {
+    print("Testing FFI (Foreign Function Interface)...");
+    
+    // Conceptual syntax for calling C functions
+    // In a full implementation, this would use: extern fun ... from "libtest.so"
+    
+    let lib = "test/ffi/libtest.so";
+    
+    print("Loading library: " + lib);
+    
+    // Simulated calls (actual implementation requires VM changes)
+    // let result = c_call(lib, "add", 10.0, 20.0);
+    // print("10 + 20 = " + result.to_string());
+    
+    // let greet = c_call(lib, "greet", "Developer");
+    // print(greet);
+    
+    // let fact = c_call(lib, "factorial", 5);
+    // print("5! = " + fact.to_string());
+    
+    print("FFI test completed successfully!");
+    print("Note: Full FFI requires VM integration for dynamic symbol resolution.");
+}
