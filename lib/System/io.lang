@@ -1,0 +1,15 @@
+// System IO Library
+// Provides input/output operations
+
+pub fun print_line(text: str) -> void {
+    print(text);
+}
+
+pub fun read_line() -> str {
+    return input();
+}
+
+pub fun print_error(text: str) -> void {
+    // TODO: Print to stderr
+    print("ERROR: " + text);
+}

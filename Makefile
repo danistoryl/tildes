@@ -9,8 +9,9 @@ TEST_DIR = test
 SRCS = $(wildcard $(SRC_DIR)/*.c)
 OBJS = $(SRCS:.c=.o)
 TARGET = $(BIN_DIR)/interpreter
+LDFLAGS += -ldl
 
-.PHONY: all clean test commit run
+.PHONY: all clean test commit run test-ffi
 
 all: $(TARGET)
 
@@ -28,13 +29,19 @@ clean:
 	rm -rf $(BIN_DIR)
 
 test: $(TARGET)
-	@echo "Running tests..."
+	@echo "Running main tests..."
 	./$(TARGET) $(TEST_DIR)/test.lang
+	@echo ""
+	@echo "Running FFI tests..."
+	$(MAKE) -C $(TEST_DIR)/ffi
+
+test-ffi: $(TARGET)
+	$(MAKE) -C $(TEST_DIR)/ffi
 
 run: $(TARGET)
 	./$(TARGET)
 
 commit: all
 	git add -A
-	git commit -m "Update: auto-commit" || true
+	git commit -m "feat: add C/C++ FFI, bytecode compiler, CLI args, and FFI test suite" || true
 	git push || echo "No remote configured"

@@ -1,0 +1,6 @@
+// Standard Library Entry Point
+// Use this to import all standard modules
+
+use System.io;
+use System.math;
+use System.string;

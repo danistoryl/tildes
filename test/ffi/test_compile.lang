@@ -1,0 +1,17 @@
+// Test bytecode compilation
+
+fun main() {
+    print("Testing Bytecode Compilation...");
+    
+    let x = 100;
+    let y = 200;
+    let sum = x + y;
+    
+    print("100 + 200 = " + sum.to_string());
+    
+    if sum == 300 {
+        print("Compilation test passed!");
+    } else {
+        print("Error: Unexpected result");
+    }
+}

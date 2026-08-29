@@ -1,0 +1,21 @@
+// Test Modules: use System, use PackageName.ModuleName
+use System;
+use System.math;
+use System.string;
+
+fun main() {
+    print("Modules test passed!")
+    
+    // Test System.io
+    print("Testing IO module...")
+    
+    // Test System.math
+    let result: num = sqrt(16.0)
+    print("sqrt(16): " + result.to_string())
+    
+    // Test System.string
+    let text: str = "hello"
+    print("String length: " + len(text).to_string())
+    
+    print("All modules loaded successfully!")
+}

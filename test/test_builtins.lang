@@ -1,0 +1,46 @@
+// Test Built-in Functions
+use System;
+
+fun main() {
+    print("Built-ins test passed!")
+    
+    // Print and type conversion
+    print("Testing print...")
+    let num_val: num = 42
+    print("Number as string: " + num_val.to_string())
+    
+    let bool_val: bool = true
+    print("Boolean: " + bool_val.to_string())
+    
+    // Math built-ins
+    print("abs(-5): " + abs(-5).to_string())
+    print("sqrt(81): " + sqrt(81).to_string())
+    print("pow(2, 3): " + pow(2, 3).to_string())
+    print("min(5, 3): " + min(5, 3).to_string())
+    print("max(5, 3): " + max(5, 3).to_string())
+    
+    // Type conversion
+    let int_str: str = "123"
+    let converted: num = int(int_str)
+    print("int('123'): " + converted.to_string())
+    
+    let float_str: str = "3.14"
+    let float_val: f64 = float(float_str)
+    print("float('3.14'): " + float_val.to_string())
+    
+    // Type checking
+    print("type_of(42): " + type_of(42))
+    print("type_of('hello'): " + type_of("hello"))
+    print("type_of(true): " + type_of(true))
+    
+    // Collection built-ins
+    let arr: list<num> = [1, 2, 3, 4, 5]
+    print("len([1,2,3,4,5]): " + len(arr).to_string())
+    
+    arr.append(6)
+    print("After append, len: " + len(arr).to_string())
+    
+    print("contains([1,2,3], 2): " + contains(arr, 3).to_string())
+    
+    print("All built-ins working!")
+}

@@ -1,0 +1,21 @@
+// Test CLI arguments (argc/argv)
+
+fun main() {
+    print("Testing CLI Arguments...");
+    
+    // Access command line arguments
+    // In full implementation: sys.args or similar
+    let args = get_args(); // Conceptual builtin
+    
+    print("Number of arguments: " + len(args).to_string());
+    
+    for i in 0..len(args) {
+        print("Arg[" + i.to_string() + "]: " + args[i]);
+    }
+    
+    if len(args) > 0 {
+        print("First argument: " + args[0]);
+    }
+    
+    print("CLI args test completed!");
+}
