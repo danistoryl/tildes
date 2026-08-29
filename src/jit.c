@@ -153,7 +153,11 @@ uint8_t* jit_compile_function(VM* vm, ObjFunc* func, size_t* out_size) {
 }
 
 int64_t jit_execute(uint8_t* code, int64_t arg1, int64_t arg2) {
-    typedef int64_t (*jit_func_t)(int64_t, int64_t);
-    jit_func_t func = (jit_func_t)code;
-    return func(arg1, arg2);
+    // Use union to safely convert object pointer to function pointer (ISO C compliant)
+    union {
+        uint8_t* obj_ptr;
+        int64_t (*func_ptr)(int64_t, int64_t);
+    } converter;
+    converter.obj_ptr = code;
+    return converter.func_ptr(arg1, arg2);
 }
