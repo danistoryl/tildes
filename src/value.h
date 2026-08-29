@@ -46,7 +46,7 @@ typedef struct Value {
 #define NIL_VAL ((Value){VAL_NIL, {.as_ptr = NULL}})
 #define BOOL_VAL(b) ((Value){VAL_BOOL, {.as_bool = (b)}})
 #define NUMBER_VAL(n) ((Value){VAL_NUMBER, {.as_number = (n)}})
-#define STRING_VAL(s) ((Value){VAL_STRING, {.as_string = (s)}})
+#define STRING_VAL(s) ((Value){VAL_STRING, {.as_string = (ObjString*)(s)}})
 #define NATIVE_VAL(fn) ((Value){VAL_NATIVE, {.as_native = (fn)}})
 
 // Macros for checking types
