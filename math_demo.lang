@@ -1,0 +1,8 @@
+// Math Demo
+print("=== Math Operations Test ===");
+print(10 + 5);
+print(20 - 8);
+print(6 * 7);
+print(100 / 4);
+print(15 + 3.5);
+print("=== Test Complete ===");

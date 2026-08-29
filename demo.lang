@@ -1,0 +1,31 @@
+// Simple Demo for FCL Language
+// Testing Print and Math Operations
+
+pub fun main() {
+    // 1. Basic Print
+    print("=== FCL Language Demo ===");
+    print("Testing basic output...");
+
+    // 2. Math Operations
+    let a = 10;
+    let b = 3.5;
+    
+    print("Value A: " + a.to_string());
+    print("Value B: " + b.to_string());
+
+    let sum = a + b;
+    let diff = a - b;
+    let prod = a * b;
+    let div = a / b;
+
+    print("A + B = " + sum.to_string());
+    print("A - B = " + diff.to_string());
+    print("A * B = " + prod.to_string());
+    print("A / B = " + div.to_string());
+
+    // 3. Complex Math Expression
+    let result = (a * 2) + (b / 2) - 5;
+    print("Complex Result ((10*2) + (3.5/2) - 5): " + result.to_string());
+
+    print("=== Demo Completed ===");
+}
