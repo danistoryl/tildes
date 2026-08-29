@@ -1,0 +1,41 @@
+// FCL IO Module - Input/Output operations
+// Usage: use System.io;
+
+pub fun read_file(path: str) -> str {
+    // Native implementation will be loaded from C module
+    return "";
+}
+
+pub fun write_file(path: str, content: str) -> bool {
+    return false;
+}
+
+pub fun append_file(path: str, content: str) -> bool {
+    return false;
+}
+
+pub fun file_exists(path: str) -> bool {
+    return false;
+}
+
+pub fun delete_file(path: str) -> bool {
+    return false;
+}
+
+pub fun read_line() -> str {
+    // Read a line from stdin
+    return "";
+}
+
+pub fun print_line(msg: str) {
+    print(msg);
+}
+
+pub fun print_error(msg: str) {
+    // Print to stderr
+    print(msg);
+}
+
+pub const STDIN = 0;
+pub const STDOUT = 1;
+pub const STDERR = 2;

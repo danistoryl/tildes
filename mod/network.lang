@@ -1,0 +1,43 @@
+// FCL Network Module - Network operations (placeholder)
+// Usage: use System.network;
+
+pub fun http_get(url: str) -> str {
+    // Native implementation will be loaded from C module
+    return "";
+}
+
+pub fun http_post(url: str, data: str) -> str {
+    return "";
+}
+
+pub fun http_put(url: str, data: str) -> str {
+    return "";
+}
+
+pub fun http_delete(url: str) -> str {
+    return "";
+}
+
+pub fun create_socket() -> num {
+    return -1;
+}
+
+pub fun connect(host: str, port: num) -> bool {
+    return false;
+}
+
+pub fun send(data: str) -> num {
+    return 0;
+}
+
+pub fun receive(buffer_size: num) -> str {
+    return "";
+}
+
+pub fun close_socket(socket: num) -> bool {
+    return false;
+}
+
+pub const HTTP_OK = 200;
+pub const HTTP_NOT_FOUND = 404;
+pub const HTTP_SERVER_ERROR = 500;

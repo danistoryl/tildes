@@ -1,0 +1,5 @@
+print("Test math");
+let a = 10;
+let b = 5;
+let sum = a + b;
+print(sum);

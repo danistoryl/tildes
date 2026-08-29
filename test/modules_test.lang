@@ -1,0 +1,123 @@
+// Test: Using modules from mod folder
+print("=== Module Test ===");
+
+// Test basic print (builtin)
+print("Testing builtin print:");
+let message = "Hello from FCL!";
+print(message);
+
+// Test math operations
+print("\nTesting math operations:");
+let a = 10;
+let b = 5;
+print("Addition: " + (a + b).to_string());
+print("Subtraction: " + (a - b).to_string());
+print("Multiplication: " + (a * b).to_string());
+print("Division: " + (a / b).to_string());
+
+// Test with floating point
+let x = 15.5;
+let y = 3.5;
+print("Float addition: " + (x + y).to_string());
+
+// Test control flow
+print("\nTesting control flow:");
+fun check_number(n: num) -> str {
+    if n > 10 {
+        return "Greater than 10";
+    } elif n == 10 {
+        return "Equals 10";
+    } else {
+        return "Less than 10";
+    }
+}
+
+print(check_number(15));
+print(check_number(10));
+print(check_number(5));
+
+// Test when expression
+print("\nTesting when expression:");
+fun describe_day(day: num) -> str {
+    return when day {
+        1 => "Monday",
+        2 => "Tuesday",
+        3 => "Wednesday",
+        4 => "Thursday",
+        5 => "Friday",
+        6, 7 => "Weekend",
+        else => "Invalid day"
+    };
+}
+
+print(describe_day(1));
+print(describe_day(6));
+print(describe_day(8));
+
+// Test loops
+print("\nTesting for loop:");
+let sum = 0;
+for i in 0..5 {
+    sum = sum + i;
+    print("i = " + i.to_string() + ", sum = " + sum.to_string());
+}
+
+print("\nTesting while loop:");
+let count = 3;
+while count > 0 {
+    print("Countdown: " + count.to_string());
+    count = count - 1;
+}
+print("Liftoff!");
+
+// Test functions
+print("\nTesting functions:");
+fun factorial(n: num) -> num {
+    if n <= 1 {
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
+
+print("Factorial of 5: " + factorial(5).to_string());
+print("Factorial of 3: " + factorial(3).to_string());
+
+// Test structs
+print("\nTesting structs:");
+struct Person {
+    name: str
+    age: num
+}
+
+fun create_person(name: str, age: num) -> Person {
+    let p: Person = {
+        name,
+        age
+    };
+    return p;
+}
+
+let person = create_person("Alice", 30);
+print("Person name: " + person.name);
+print("Person age: " + person.age.to_string());
+
+// Test enums
+print("\nTesting enums:");
+enum Color {
+    RED,
+    GREEN,
+    BLUE
+}
+
+let color = Color.RED;
+print("Selected color enum");
+
+// Test lists
+print("\nTesting lists:");
+let numbers = [1, 2, 3, 4, 5];
+print("List length concept test");
+for num in numbers {
+    print("Number: " + num.to_string());
+}
+
+print("\n=== All Tests Complete ===");

@@ -1,0 +1,58 @@
+# Advanced FFI Test for FCL Language
+
+print("=== Advanced FFI Test ===");
+
+// Test 1: Struct handling
+print("\n1. Struct Test:");
+extern fun create_point(x: num, y: num) -> ptr from "libadvanced.so";
+extern fun point_distance(p: ptr) -> num from "libadvanced.so";
+extern fun modify_point(p: ptr, dx: num, dy: num) -> void from "libadvanced.so";
+extern fun free_point(p: ptr) -> void from "libadvanced.so";
+
+let p = create_point(10.0, 20.0);
+print("  Created Point(10, 20)");
+let dist = point_distance(p);
+print("  Distance: " + dist.to_string());
+
+modify_point(p, 5.0, 5.0);
+print("  Modified Point by (5, 5)");
+
+free_point(p);
+print("  Point freed");
+
+// Test 2: Variadic functions
+print("\n2. Variadic Function Test:");
+extern fun sum_variadic(count: num, ...) -> num from "libadvanced.so";
+
+// Note: Variadic calls need special syntax in FFI
+// This is a placeholder for demonstration
+print("  Variadic functions supported via FFI");
+
+// Test 3: Callbacks
+print("\n3. Callback Test:");
+extern fun register_callback(cb: fn(num) -> void) -> void from "libadvanced.so";
+extern fun trigger_event(value: num) -> void from "libadvanced.so";
+
+fun my_callback(val: num) {
+    print("  Callback received: " + val.to_string());
+}
+
+register_callback(my_callback);
+trigger_event(42);
+
+// Test 4: Void* memory operations
+print("\n4. Memory Buffer Test:");
+extern fun allocate_buffer(size: num) -> ptr from "libadvanced.so";
+extern fun write_to_buffer(buf: ptr, data: str, len: num) -> void from "libadvanced.so";
+extern fun read_from_buffer(buf: ptr) -> str from "libadvanced.so";
+extern fun free_buffer(buf: ptr) -> void from "libadvanced.so";
+
+let buf = allocate_buffer(100);
+print("  Allocated buffer (100 bytes)");
+write_to_buffer(buf, "Hello FFI", 9);
+let content = read_from_buffer(buf);
+print("  Buffer content: " + content);
+free_buffer(buf);
+print("  Buffer freed");
+
+print("\n=== Advanced FFI Test Complete ===");

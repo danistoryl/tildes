@@ -1,0 +1,56 @@
+// FCL Math Module - Advanced mathematical operations
+// Usage: use System.math;
+
+pub fun sin(x: num) -> num {
+    // Native implementation will be loaded from C module
+    return 0;
+}
+
+pub fun cos(x: num) -> num {
+    return 0;
+}
+
+pub fun tan(x: num) -> num {
+    return 0;
+}
+
+pub fun sqrt(x: num) -> num {
+    if x < 0 {
+        return -1; // Error case
+    }
+    return 0;
+}
+
+pub fun log(x: num) -> num {
+    return 0;
+}
+
+pub fun exp(x: num) -> num {
+    return 0;
+}
+
+pub fun pow(base: num, exponent: num) -> num {
+    return 0;
+}
+
+pub fun abs(x: num) -> num {
+    if x < 0 {
+        return -x;
+    }
+    return x;
+}
+
+pub fun floor(x: num) -> num {
+    return 0;
+}
+
+pub fun ceil(x: num) -> num {
+    return 0;
+}
+
+pub fun round(x: num) -> num {
+    return 0;
+}
+
+pub const PI = 3.141592653589793;
+pub const E = 2.718281828459045;

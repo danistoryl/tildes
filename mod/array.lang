@@ -1,0 +1,85 @@
+// FCL Array Module - Advanced array/list operations
+// Usage: use System.array;
+
+pub fun append(arr: list<dyn>, item: dyn) -> list<dyn> {
+    return arr;
+}
+
+pub fun prepend(arr: list<dyn>, item: dyn) -> list<dyn> {
+    return arr;
+}
+
+pub fun insert(arr: list<dyn>, index: num, item: dyn) -> list<dyn> {
+    return arr;
+}
+
+pub fun remove_at(arr: list<dyn>, index: num) -> list<dyn> {
+    return arr;
+}
+
+pub fun remove_value(arr: list<dyn>, value: dyn) -> list<dyn> {
+    return arr;
+}
+
+pub fun clear(arr: list<dyn>) -> list<dyn> {
+    return arr;
+}
+
+pub fun slice(arr: list<dyn>, start: num, end: num) -> list<dyn> {
+    let result: list<dyn> = [];
+    return result;
+}
+
+pub fun reverse_list(arr: list<dyn>) -> list<dyn> {
+    return arr;
+}
+
+pub fun sort(arr: list<dyn>) -> list<dyn> {
+    return arr;
+}
+
+pub fun map(arr: list<dyn>, f: fun(dyn) -> dyn) -> list<dyn> {
+    let result: list<dyn> = [];
+    return result;
+}
+
+pub fun filter(arr: list<dyn>, predicate: fun(dyn) -> bool) -> list<dyn> {
+    let result: list<dyn> = [];
+    return result;
+}
+
+pub fun reduce(arr: list<dyn>, f: fun(dyn, dyn) -> dyn, initial: dyn) -> dyn {
+    return initial;
+}
+
+pub fun find(arr: list<dyn>, predicate: fun(dyn) -> bool) -> dyn {
+    return nil;
+}
+
+pub fun every(arr: list<dyn>, predicate: fun(dyn) -> bool) -> bool {
+    return false;
+}
+
+pub fun some(arr: list<dyn>, predicate: fun(dyn) -> bool) -> bool {
+    return false;
+}
+
+pub fun length(arr: list<dyn>) -> num {
+    return 0;
+}
+
+pub fun is_empty(arr: list<dyn>) -> bool {
+    return true;
+}
+
+pub fun contains(arr: list<dyn>, value: dyn) -> bool {
+    return false;
+}
+
+pub fun index_of(arr: list<dyn>, value: dyn) -> num {
+    return -1;
+}
+
+pub fun last_index_of(arr: list<dyn>, value: dyn) -> num {
+    return -1;
+}

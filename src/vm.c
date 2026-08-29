@@ -9,6 +9,45 @@
 #include <string.h>
 #include <math.h>
 
+// Simple variable storage for demo (replaces scope system for now)
+#define MAX_VARIABLES 256
+typedef struct {
+    char name[64];
+    double value;
+    bool is_defined;
+} Variable;
+
+static Variable variables[MAX_VARIABLES];
+static int var_count = 0;
+
+static double get_variable(const char* name) {
+    for (int i = 0; i < var_count; i++) {
+        if (variables[i].is_defined && strcmp(variables[i].name, name) == 0) {
+            return variables[i].value;
+        }
+    }
+    return 0.0; // Return 0 if not found
+}
+
+static void set_variable(const char* name, double value) {
+    // Check if variable exists
+    for (int i = 0; i < var_count; i++) {
+        if (strcmp(variables[i].name, name) == 0) {
+            variables[i].value = value;
+            variables[i].is_defined = true;
+            return;
+        }
+    }
+    // Add new variable
+    if (var_count < MAX_VARIABLES) {
+        strncpy(variables[var_count].name, name, 63);
+        variables[var_count].name[63] = '\0';
+        variables[var_count].value = value;
+        variables[var_count].is_defined = true;
+        var_count++;
+    }
+}
+
 void vm_init(VM* vm) {
     gc_init(&vm->gc);
     vm->stack_top = vm->stack;
@@ -19,6 +58,12 @@ void vm_init(VM* vm) {
     
     // Initialize builtin functions (no scope needed for demo)
     (void)vm; // Suppress unused warning for now
+    
+    // Reset variables
+    var_count = 0;
+    for (int i = 0; i < MAX_VARIABLES; i++) {
+        variables[i].is_defined = false;
+    }
 }
 
 void vm_free(VM* vm) {
@@ -37,34 +82,53 @@ Value vm_pop(VM* vm) {
     return *vm->stack_top;
 }
 
-// Simple expression evaluator for demo
+// Helper to extract a number or variable value
+static double get_number_or_var(const char* str, char** endptr) {
+    while (*str == ' ') str++;
+    
+    // Check if it starts with a letter (variable)
+    if ((*str >= 'a' && *str <= 'z') || (*str >= 'A' && *str <= 'Z') || *str == '_') {
+        char var_name[64];
+        int i = 0;
+        while ((*str >= 'a' && *str <= 'z') || 
+               (*str >= 'A' && *str <= 'Z') || 
+               (*str >= '0' && *str <= '9') || 
+               *str == '_') {
+            if (i < 63) var_name[i++] = *str;
+            str++;
+        }
+        var_name[i] = '\0';
+        *endptr = (char*)str;
+        return get_variable(var_name);
+    }
+    
+    // Otherwise parse as number
+    return strtod(str, endptr);
+}
+
+// Expression evaluator with variable support
 static double evaluate_expr(const char* expr) {
-    // Very basic parser for demo - handles: number, number + number, number - number, etc.
     char* endptr;
-    double left = strtod(expr, &endptr);
+    double left = get_number_or_var(expr, &endptr);
     
     while (*endptr != '\0') {
         while (*endptr == ' ') endptr++;
         
         if (*endptr == '+') {
             endptr++;
-            while (*endptr == ' ') endptr++;
-            double right = strtod(endptr, &endptr);
+            double right = get_number_or_var(endptr, &endptr);
             left += right;
         } else if (*endptr == '-') {
             endptr++;
-            while (*endptr == ' ') endptr++;
-            double right = strtod(endptr, &endptr);
+            double right = get_number_or_var(endptr, &endptr);
             left -= right;
         } else if (*endptr == '*') {
             endptr++;
-            while (*endptr == ' ') endptr++;
-            double right = strtod(endptr, &endptr);
+            double right = get_number_or_var(endptr, &endptr);
             left *= right;
         } else if (*endptr == '/') {
             endptr++;
-            while (*endptr == ' ') endptr++;
-            double right = strtod(endptr, &endptr);
+            double right = get_number_or_var(endptr, &endptr);
             if (right != 0) left /= right;
         } else {
             break;
@@ -151,28 +215,80 @@ InterpretResult vm_run(VM* vm, const char* source) {
                                 printf("%s\n", start);
                             }
                         } else {
-                            // Try to evaluate as expression
-                            double result = evaluate_expr(start);
-                            // Check if it's an integer
-                            if (result == (int)result) {
-                                printf("%d\n", (int)result);
+                            // Check if it's a variable name first
+                            char* var_check = start;
+                            while (*var_check == ' ') var_check++;
+                            
+                            // Simple variable lookup: check if it's just an identifier
+                            char* end_ptr = var_check;
+                            while ((*end_ptr >= 'a' && *end_ptr <= 'z') || 
+                                   (*end_ptr >= 'A' && *end_ptr <= 'Z') || 
+                                   (*end_ptr >= '0' && *end_ptr <= '9') || 
+                                   *end_ptr == '_') {
+                                end_ptr++;
+                            }
+                            
+                            // If it's just an identifier (no operators), try variable lookup
+                            if (*end_ptr == '\0' || *end_ptr == ')' || *end_ptr == ' ' || *end_ptr == '\n') {
+                                char var_name[64];
+                                size_t vlen = end_ptr - var_check;
+                                if (vlen > 0 && vlen < 64) {
+                                    strncpy(var_name, var_check, vlen);
+                                    var_name[vlen] = '\0';
+                                    double val = get_variable(var_name);
+                                    if ((int)val == val) {
+                                        printf("%d\n", (int)val);
+                                    } else {
+                                        printf("%g\n", val);
+                                    }
+                                } else {
+                                    // Not a valid variable, evaluate as expression
+                                    double result = evaluate_expr(start);
+                                    if ((int)result == result) {
+                                        printf("%d\n", (int)result);
+                                    } else {
+                                        printf("%g\n", result);
+                                    }
+                                }
                             } else {
-                                printf("%g\n", result);
+                                // Contains operators, evaluate as expression with variable substitution
+                                double result = evaluate_expr(start);
+                                if ((int)result == result) {
+                                    printf("%d\n", (int)result);
+                                } else {
+                                    printf("%g\n", result);
+                                }
                             }
                         }
                     }
                 }
-                // Check for variable declaration: let x = value
+                // Check for variable declaration: let x = value or let x: type = value
                 else if (strncmp(trimmed, "let ", 4) == 0) {
-                    // For demo, we just acknowledge it
                     char* eq = strchr(trimmed, '=');
                     if (eq) {
                         char* value_part = eq + 1;
                         while (*value_part == ' ') value_part++;
-                        
+
+                        // Remove semicolon if present
+                        char* semi = strchr(value_part, ';');
+                        if (semi) *semi = '\0';
+
                         // Store in a simple way (demo only)
                         double val = evaluate_expr(value_part);
-                        (void)val; // In real impl, store in scope
+
+                        // Extract variable name
+                        char* name_start = trimmed + 4;
+                        while (*name_start == ' ') name_start++;
+                        char* name_end = name_start;
+                        while (*name_end != ' ' && *name_end != ':' && *name_end != '=') name_end++;
+
+                        char var_name[64];
+                        size_t name_len = name_end - name_start;
+                        if (name_len >= 64) name_len = 63;
+                        strncpy(var_name, name_start, name_len);
+                        var_name[name_len] = '\0';
+
+                        set_variable(var_name, val);
                     }
                 }
                 // Check for fun main()
