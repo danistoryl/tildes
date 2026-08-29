@@ -1,0 +1,83 @@
+// FCL String Module - Advanced string operations
+// Usage: use System.string;
+
+pub fun length(s: str) -> num {
+    return 0;
+}
+
+pub fun uppercase(s: str) -> str {
+    return s;
+}
+
+pub fun lowercase(s: str) -> str {
+    return s;
+}
+
+pub fun trim(s: str) -> str {
+    return s;
+}
+
+pub fun trim_left(s: str) -> str {
+    return s;
+}
+
+pub fun trim_right(s: str) -> str {
+    return s;
+}
+
+pub fun substring(s: str, start: num, end: num) -> str {
+    return s;
+}
+
+pub fun char_at(s: str, index: num) -> str {
+    return "";
+}
+
+pub fun index_of(s: str, search: str) -> num {
+    return -1;
+}
+
+pub fun contains(s: str, search: str) -> bool {
+    return false;
+}
+
+pub fun starts_with(s: str, prefix: str) -> bool {
+    return false;
+}
+
+pub fun ends_with(s: str, suffix: str) -> bool {
+    return false;
+}
+
+pub fun replace(s: str, old: str, new: str) -> str {
+    return s;
+}
+
+pub fun replace_all(s: str, old: str, new: str) -> str {
+    return s;
+}
+
+pub fun split(s: str, delimiter: str) -> list<str> {
+    let result: list<str> = [];
+    return result;
+}
+
+pub fun join(items: list<str>, delimiter: str) -> str {
+    return "";
+}
+
+pub fun reverse(s: str) -> str {
+    return s;
+}
+
+pub fun repeat(s: str, count: num) -> str {
+    return "";
+}
+
+pub fun pad_left(s: str, length: num, char: str) -> str {
+    return s;
+}
+
+pub fun pad_right(s: str, length: num, char: str) -> str {
+    return s;
+}

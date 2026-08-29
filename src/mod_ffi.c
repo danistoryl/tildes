@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 200809L
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,8 +8,6 @@
 #include "value.h"
 #include "vm.h"
 #include "hashmap.h"
-
-#define _POSIX_C_SOURCE 200809L
 
 typedef struct {
     bool had_error;
